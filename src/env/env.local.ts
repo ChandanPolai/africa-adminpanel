@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  baseURL: 'https://9zqwrzw6-3780.inc1.devtunnels.ms',
+  baseURL: 'https://community.itfuturz.in',
   route: 'admin',
-  imageUrl:'https://9zqwrzw6-3780.inc1.devtunnels.ms/',
+  imageUrl:'https://community.itfuturz.in/',
   };
 
 
