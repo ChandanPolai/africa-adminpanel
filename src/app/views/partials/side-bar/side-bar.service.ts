@@ -72,7 +72,7 @@ export class SideBarService {
             //   icon: 'calendar-check',
             // },
             // {
-            //   title: 'Dubai Syndicate Launch Event',
+            //   title: 'Africa-Community Launch Event',
             //   link: 'eventRegistration',
             //   icon: 'calendar-check',
             // },
@@ -220,7 +220,7 @@ export class SideBarService {
             },  
           ]
         },
-        // !! THIS SECTION IS COMMENTED FOR FUTURE USE IN DUBAI SYNDICATE PROJECT WHEN MEET WILL BE SAYING TO LAUNCH FINANCE MODULE
+        // !! THIS SECTION IS COMMENTED FOR FUTURE USE IN AFRICA-COMMUNITY PROJECT WHEN MEET WILL BE SAYING TO LAUNCH FINANCE MODULE
         // {
         //   title: 'FinanceSummary',
         //   link: 'financeOverall',

@@ -2,40 +2,40 @@
 /* COMPLETE CSS OVERRIDE FIX - Replace your entire sidebar.component.scss */
 /* ============================================ */
 
-// Dubai Syndicate Purple Color Palette
-$primary-purple: #30185B;
-$dark-purple: #1f0f3a;
-$light-purple: #5a3a7a;
-$medium-purple: #452a6b;
-$accent-gold: #FFD700;
-$light-gold: #FFE55C;
-$cream-gold: #FFF8DC;
-$purple-tint: #4a2d7a;
+// Africa-Community Green & Red Color Palette - Enhanced
+$primary-green: #2d8659; // Rich Emerald Green
+$dark-green: #1e5d3f; // Deep Forest Green
+$light-green: #4ade80; // Bright Green
+$medium-green: #22c55e; // Vibrant Green
+$accent-red: #ef4444; // Bright Red
+$light-red: #f87171; // Light Red
+$cream-red: #fecaca; // Soft Pink
+$green-tint: #10b981; // Emerald
 
 // Main theme colors
-$primary-color: $primary-purple;
-$primary-gradient: linear-gradient(135deg, $medium-purple 0%, $primary-purple 100%);
-$secondary-color: $light-purple;
-$accent-color: $accent-gold;
+$primary-color: $primary-green;
+$primary-gradient: linear-gradient(135deg, #1e5d3f 0%, #2d8659 50%, #22c55e 100%);
+$secondary-color: $accent-red;
+$accent-color: $accent-red;
 $text-primary: #ffffff;
-$text-secondary: $cream-gold;
-$bg-dark: #2a1a4a;
-$bg-darker: #1f0f3a;
+$text-secondary: #e0f2fe; // Light Blue/Cream
+$bg-dark: #0f4c3a; // Rich dark green background
+$bg-darker: #0a3325; // Deeper dark green
 $white: #ffffff;
-$shadow-light: rgba(48, 24, 91, 0.4);
-$shadow-medium: rgba(48, 24, 91, 0.6);
+$shadow-light: rgba(45, 134, 89, 0.3);
+$shadow-medium: rgba(45, 134, 89, 0.5);
 $border-radius: 16px;
 $sidebar-width: 320px;
 $sidebar-collapsed-width: 75px;
 
 // Additional colors
-$hover-bg: rgba(255, 215, 0, 0.15);
-$active-bg: rgba(255, 215, 0, 0.22);
-$border-color: rgba(255, 215, 0, 0.2);
-$logo-bg: rgba(255, 215, 0, 0.1);
-$logo-border: rgba(255, 215, 0, 0.3);
-$submenu-bg: rgba(31, 15, 58, 0.8);
-$submenu-border: rgba(255, 215, 0, 0.1);
+$hover-bg: rgba(239, 68, 68, 0.2); // Red hover with more opacity
+$active-bg: rgba(239, 68, 68, 0.3); // Red active
+$border-color: rgba(239, 68, 68, 0.3); // Red border
+$logo-bg: rgba(239, 68, 68, 0.15); // Red logo bg
+$logo-border: rgba(239, 68, 68, 0.4); // Red logo border
+$submenu-bg: rgba(10, 51, 37, 0.95); // Dark green submenu
+$submenu-border: rgba(239, 68, 68, 0.2); // Red submenu border
 
 .submenu {
   // Remove conflicting rules and simplify
@@ -44,7 +44,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
   transition: max-height 0.3s ease !important;
   
   // Background and positioning
-  background: rgba(31, 15, 58, 0.95) !important;
+  background: rgba(10, 51, 37, 0.95) !important;
   border-radius: 0 0 8px 8px !important;
   margin-top: 2px !important;
   position: relative !important;
@@ -122,10 +122,10 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       align-items: center !important;
       justify-content: center !important;
       margin-right: 8px !important;
-      background: rgba(255, 215, 0, 0.08) !important;
+      background: rgba(239, 68, 68, 0.12) !important;
       border-radius: 4px !important;
       transition: all 0.3s ease !important;
-      border: 1px solid rgba(255, 215, 0, 0.1) !important;
+      border: 1px solid rgba(239, 68, 68, 0.15) !important;
       flex-shrink: 0 !important;
 
       i {
@@ -157,9 +157,9 @@ $submenu-border: rgba(255, 215, 0, 0.1);
 
     &:hover {
       color: $accent-color !important;
-      background: rgba(255, 215, 0, 0.08) !important;
+      background: rgba(239, 68, 68, 0.12) !important;
       transform: translateX(3px) !important;
-      border-color: rgba(255, 215, 0, 0.2) !important;
+      border-color: rgba(239, 68, 68, 0.25) !important;
 
       &::before {
         opacity: 1 !important;
@@ -167,8 +167,8 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       }
 
       .submenu-icon {
-        background: rgba(255, 215, 0, 0.15) !important;
-        border-color: rgba(255, 215, 0, 0.2) !important;
+        background: rgba(220, 20, 60, 0.15) !important;
+        border-color: rgba(239, 68, 68, 0.25) !important;
         
         i {
           color: $accent-color !important;
@@ -178,15 +178,15 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       .submenu-indicator {
         background: $accent-color !important;
         transform: scale(1.1) !important;
-        border-color: rgba(255, 215, 0, 0.3) !important;
+        border-color: rgba(220, 20, 60, 0.3) !important;
       }
     }
 
     &.active {
       color: $accent-color !important;
-      background: rgba(255, 215, 0, 0.12) !important;
+      background: rgba(220, 20, 60, 0.12) !important;
       transform: translateX(3px) !important;
-      border-color: rgba(255, 215, 0, 0.25) !important;
+      border-color: rgba(220, 20, 60, 0.25) !important;
 
       &::before {
         opacity: 1 !important;
@@ -195,8 +195,8 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       }
 
       .submenu-icon {
-        background: rgba(255, 215, 0, 0.2) !important;
-        border-color: rgba(255, 215, 0, 0.3) !important;
+        background: rgba(220, 20, 60, 0.2) !important;
+        border-color: rgba(220, 20, 60, 0.3) !important;
         
         i {
           color: $accent-color !important;
@@ -205,7 +205,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
 
       .submenu-indicator {
         background: $accent-color !important;
-        border-color: rgba(255, 215, 0, 0.2) !important;
+        border-color: rgba(239, 68, 68, 0.25) !important;
       }
     }
   }
@@ -219,7 +219,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  background: rgba(31, 15, 58, 0.85) !important;
+  background: rgba(10, 51, 37, 0.85) !important;
   z-index: 1041 !important;
   opacity: 0 !important;
   visibility: hidden !important;
@@ -246,7 +246,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
   background: $primary-gradient !important;
   border: 2px solid $logo-border !important;
   border-radius: 12px !important;
-    box-shadow: 0 6px 20px rgba(48, 24, 91, 0.4), 0 3px 6px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 6px 20px rgba(34, 139, 34, 0.4), 0 3px 6px rgba(0, 0, 0, 0.2) !important;
   z-index: 1052 !important;
   display: flex !important;
   flex-direction: column !important;
@@ -282,7 +282,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
 
   &:hover {
     transform: translateY(-2px) scale(1.05) !important;
-    box-shadow: 0 8px 24px rgba(48, 24, 91, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 8px 24px rgba(34, 139, 34, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3) !important;
     border-color: $accent-color !important;
     
     .hamburger-line {
@@ -293,7 +293,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
 
   &.active {
     transform: rotate(180deg) !important;
-    background: linear-gradient(135deg, $accent-gold 0%, $light-gold 100%) !important;
+    background: linear-gradient(135deg, $accent-red 0%, $light-red 100%) !important;
     
     .hamburger-line:nth-child(1) {
       transform: rotate(45deg) translate(6px, 6px) !important;
@@ -318,7 +318,9 @@ $submenu-border: rgba(255, 215, 0, 0.1);
   width: $sidebar-width !important;
   height: 100vh !important;
   height: 100dvh !important; // Dynamic viewport height for mobile
-  background: linear-gradient(180deg, $bg-dark 0%, $bg-darker 100%) !important;
+  background: linear-gradient(180deg, #0f4c3a 0%, #0a3325 50%, #0f4c3a 100%) !important;
+  background-size: 100% 200% !important;
+  animation: subtleGradient 8s ease infinite !important;
   border-right: 3px solid $border-color !important;
   box-shadow: 8px 0 32px $shadow-light, 4px 0 16px $shadow-medium !important;
   z-index: 1042 !important;
@@ -446,12 +448,12 @@ $submenu-border: rgba(255, 215, 0, 0.1);
   }
 
   &::-webkit-scrollbar-track {
-      background: rgba(255, 215, 0, 0.1) !important;
+      background: rgba(239, 68, 68, 0.12) !important;
     border-radius: 3px !important;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, $light-purple 0%, $accent-gold 100%) !important;
+    background: linear-gradient(180deg, $light-green 0%, $accent-red 100%) !important;
     border-radius: 3px !important;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2) !important;
   }
@@ -467,13 +469,15 @@ $submenu-border: rgba(255, 215, 0, 0.1);
   position: relative !important;
 
   .brand-container {
-    background: linear-gradient(135deg, $primary-purple 0%, $medium-purple 100%) !important;
+    background: linear-gradient(135deg, #1e5d3f 0%, #2d8659 50%, #22c55e 100%) !important;
     padding: 20px 16px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     position: relative !important;
     overflow: hidden !important;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2) !important;
 
     &::before {
       content: '' !important;
@@ -482,7 +486,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       right: -30px !important;
       width: 120px !important;
       height: 200% !important;
-      background: linear-gradient(45deg, rgba(255, 215, 0, 0.2) 0%, transparent 70%) !important;
+      background: linear-gradient(45deg, rgba(239, 68, 68, 0.25) 0%, transparent 70%) !important;
       transform: rotate(20deg) !important;
       animation: shimmer 3s ease-in-out infinite !important;
     }
@@ -516,7 +520,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       border: 2px solid $logo-border !important;
         box-shadow: 
         0 3px 12px rgba(0, 0, 0, 0.3),
-        0 1px 4px rgba(255, 215, 0, 0.2),
+        0 1px 4px rgba(220, 20, 60, 0.2),
         inset 0 1px 2px rgba(255, 255, 255, 0.1) !important;
       transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
       backdrop-filter: blur(4px) !important;
@@ -534,7 +538,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
         line-height: 1.2 !important;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
         letter-spacing: 0.4px !important;
-        background: linear-gradient(135deg, $white 0%, $cream-gold 100%) !important;
+        background: linear-gradient(135deg, $white 0%, $text-secondary 100%) !important;
         background-clip: text !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
@@ -546,7 +550,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
     }
 
     .close-btn {
-      background: rgba(255, 215, 0, 0.15) !important;
+      background: rgba(220, 20, 60, 0.15) !important;
       border: 2px solid $logo-border !important;
       width: 36px !important;
       height: 36px !important;
@@ -561,10 +565,10 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       flex-shrink: 0 !important;
 
       &:hover {
-        background: rgba(245, 222, 179, 0.25) !important;
+        background: rgba(220, 20, 60, 0.25) !important;
         transform: scale(1.1) rotate(90deg) !important;
         color: $accent-color !important;
-        box-shadow: 0 4px 12px rgba(245, 222, 179, 0.3) !important;
+        box-shadow: 0 4px 12px rgba(220, 20, 60, 0.3) !important;
         border-color: $accent-color !important;
       }
     }
@@ -622,7 +626,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       top: 50% !important;
       width: 6px !important;
       height: 2px !important;
-      background: linear-gradient(90deg, $accent-gold 0%, $light-gold 100%) !important;
+      background: linear-gradient(90deg, $accent-red 0%, $light-red 100%) !important;
       transform: translateY(-50%) !important;
       border-radius: 1px !important;
     }
@@ -683,7 +687,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
     top: 50% !important;
     width: 0 !important;
     height: 60% !important;
-    background: linear-gradient(180deg, $accent-gold 0%, $light-gold 100%) !important;
+    background: linear-gradient(180deg, $accent-red 0%, $light-red 100%) !important;
     transform: translateY(-50%) !important;
     border-radius: 0 6px 6px 0 !important;
     transition: width 0.3s ease !important;
@@ -699,10 +703,10 @@ $submenu-border: rgba(255, 215, 0, 0.1);
     margin-right: 12px !important;
     position: relative !important;
     z-index: 1 !important;
-    background: rgba(245, 222, 179, 0.1) !important;
+    background: rgba(239, 68, 68, 0.12) !important;
     border-radius: 6px !important;
     transition: all 0.3s ease !important;
-    border: 1px solid rgba(245, 222, 179, 0.15) !important;
+    border: 1px solid rgba(239, 68, 68, 0.2) !important;
     flex-shrink: 0 !important;
 
     i {
@@ -746,7 +750,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       align-items: center !important;
       justify-content: center !important;
       border-radius: 3px !important;
-      background: rgba(245, 222, 179, 0.1) !important;
+      background: rgba(239, 68, 68, 0.12) !important;
       transition: all 0.3s ease !important;
       z-index: 1 !important;
       position: relative !important;
@@ -765,8 +769,8 @@ $submenu-border: rgba(255, 215, 0, 0.1);
     color: $accent-color !important;
     transform: translateX(4px) !important;
     background: $hover-bg !important;
-    border-color: rgba(245, 222, 179, 0.25) !important;
-    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.15) !important;
+    border-color: rgba(220, 20, 60, 0.25) !important;
+    box-shadow: 0 4px 16px rgba(220, 20, 60, 0.15) !important;
     
     &::before {
       left: 0 !important;
@@ -789,7 +793,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
     .nav-indicator {
       background: $accent-color !important;
       transform: scale(1.2) !important;
-      box-shadow: 0 0 8px rgba(255, 215, 0, 0.5) !important;
+      box-shadow: 0 0 8px rgba(220, 20, 60, 0.5) !important;
       border-color: rgba(255, 215, 0, 0.3) !important;
     }
 
@@ -807,8 +811,8 @@ $submenu-border: rgba(255, 215, 0, 0.1);
     color: $accent-color !important;
     background: $active-bg !important;
     transform: translateX(4px) !important;
-    border-color: rgba(245, 222, 179, 0.3) !important;
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2) !important;
+    border-color: rgba(220, 20, 60, 0.3) !important;
+    box-shadow: 0 6px 20px rgba(220, 20, 60, 0.2) !important;
 
     &::before {
       left: 0 !important;
@@ -820,7 +824,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
 
     .nav-icon {
       background: rgba(245, 222, 179, 0.25) !important;
-      border-color: rgba(245, 222, 179, 0.4) !important;
+      border-color: rgba(220, 20, 60, 0.4) !important;
       
       i {
         color: $accent-color !important;
@@ -830,8 +834,8 @@ $submenu-border: rgba(255, 215, 0, 0.1);
     .nav-indicator {
       background: $accent-color !important;
       transform: scale(1.1) !important;
-      box-shadow: 0 0 8px rgba(255, 215, 0, 0.4) !important;
-      border-color: rgba(255, 215, 0, 0.25) !important;
+      box-shadow: 0 0 8px rgba(220, 20, 60, 0.4) !important;
+      border-color: rgba(220, 20, 60, 0.25) !important;
     }
 
     &.submenu-toggle .submenu-arrow {
@@ -947,10 +951,10 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       align-items: center !important;
       justify-content: center !important;
       margin-right: 8px !important;
-      background: rgba(255, 215, 0, 0.08) !important;
+      background: rgba(239, 68, 68, 0.12) !important;
       border-radius: 4px !important;
       transition: all 0.3s ease !important;
-      border: 1px solid rgba(255, 215, 0, 0.1) !important;
+      border: 1px solid rgba(239, 68, 68, 0.15) !important;
       flex-shrink: 0 !important;
 
       i {
@@ -982,9 +986,9 @@ $submenu-border: rgba(255, 215, 0, 0.1);
 
     &:hover {
       color: $accent-color !important;
-      background: rgba(255, 215, 0, 0.08) !important;
+      background: rgba(239, 68, 68, 0.12) !important;
       transform: translateX(3px) !important;
-      border-color: rgba(255, 215, 0, 0.2) !important;
+      border-color: rgba(239, 68, 68, 0.25) !important;
 
       &::before {
         opacity: 1 !important;
@@ -992,8 +996,8 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       }
 
       .submenu-icon {
-        background: rgba(255, 215, 0, 0.15) !important;
-        border-color: rgba(255, 215, 0, 0.2) !important;
+        background: rgba(220, 20, 60, 0.15) !important;
+        border-color: rgba(239, 68, 68, 0.25) !important;
         
         i {
           color: $accent-color !important;
@@ -1003,15 +1007,15 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       .submenu-indicator {
         background: $accent-color !important;
         transform: scale(1.1) !important;
-        border-color: rgba(255, 215, 0, 0.3) !important;
+        border-color: rgba(220, 20, 60, 0.3) !important;
       }
     }
 
     &.active {
       color: $accent-color !important;
-      background: rgba(255, 215, 0, 0.12) !important;
+      background: rgba(220, 20, 60, 0.12) !important;
       transform: translateX(3px) !important;
-      border-color: rgba(255, 215, 0, 0.25) !important;
+      border-color: rgba(220, 20, 60, 0.25) !important;
 
       &::before {
         opacity: 1 !important;
@@ -1020,8 +1024,8 @@ $submenu-border: rgba(255, 215, 0, 0.1);
       }
 
       .submenu-icon {
-        background: rgba(255, 215, 0, 0.2) !important;
-        border-color: rgba(255, 215, 0, 0.3) !important;
+        background: rgba(220, 20, 60, 0.2) !important;
+        border-color: rgba(220, 20, 60, 0.3) !important;
         
         i {
           color: $accent-color !important;
@@ -1030,7 +1034,7 @@ $submenu-border: rgba(255, 215, 0, 0.1);
 
       .submenu-indicator {
         background: $accent-color !important;
-        border-color: rgba(255, 215, 0, 0.2) !important;
+        border-color: rgba(239, 68, 68, 0.25) !important;
       }
     }
   }
@@ -1047,6 +1051,15 @@ $submenu-border: rgba(255, 215, 0, 0.1);
   50% {
     opacity: 0.7 !important;
     transform: rotate(20deg) translateX(15px) !important;
+  }
+}
+
+@keyframes subtleGradient {
+  0%, 100% {
+    background-position: 0% 50% !important;
+  }
+  50% {
+    background-position: 100% 50% !important;
   }
 }
 

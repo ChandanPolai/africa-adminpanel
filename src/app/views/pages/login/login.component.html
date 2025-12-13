@@ -1,16 +1,24 @@
 <div class="login-container">
-  <div class="login-card">
-    <div class="login-header">
-      <div class="logo-container">
-        <img src="assets/images/App_Icon.png" alt="Dubai Syndicate Logo" class="logo">
-      </div>
-      <h1 class="app-name">Dubai Syndicate</h1>
-      <h2 class="login-title">Admin Login</h2>
-      <p class="login-subtitle">Enter your credentials to access the dashboard</p>
+  <div class="login-wrapper">
+    <!-- Left Side - Image -->
+    <div class="login-image-section">
+      <img src="assets/images/afrcia-loginpage.jpg" alt="Africa Login Background" class="login-background-image">
     </div>
 
-    <!-- Login Form -->
-    <div class="login-form" *ngIf="!showForgotPassword">
+    <!-- Right Side - Form -->
+    <div class="login-form-section">
+      <div class="login-card">
+        <div class="login-header">
+          <div class="logo-container">
+            <img src="assets/images/community.png" alt="Africa-Community Logo" class="logo">
+          </div>
+          <h1 class="app-name">Africa-Community</h1>
+          <h2 class="login-title">Admin Login</h2>
+          <p class="login-subtitle">Enter your credentials to access the dashboard</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-form" *ngIf="!showForgotPassword">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <!-- Email Field -->
         <div class="form-group">
@@ -211,8 +219,10 @@
       </form>
     </div>
 
-    <footer class="login-footer">
-      <p>© {{currentYear}} Dubai Syndicate. All rights reserved.</p>
-    </footer>
+        <footer class="login-footer">
+          <p>© {{currentYear}} Africa-Community. All rights reserved.</p>
+        </footer>
+      </div>
+    </div>
   </div>
 </div>
