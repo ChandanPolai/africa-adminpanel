@@ -4,7 +4,9 @@
       <h4 class="mb-0 fw-bold text-white">
         <i class="bi bi-users me-2"></i>Member Applications
       </h4>
-      <button class="btn btn-light rounded-pill px-4" (click)="exportData()">
+      <button class="btn btn-light rounded-pill px-4"
+              (click)="exportData()"
+              [disabled]="loading || !hasData">
         <i class="bi bi-download me-2"></i>Export Data
       </button>
     </div>

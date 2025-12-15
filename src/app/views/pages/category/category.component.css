@@ -59,3 +59,19 @@
   .modal-footer {
     border-top: 1px solid rgba(0, 0, 0, 0.05);
   }
+
+/* Truncation helpers for long names/ids */
+.category-name {
+  max-width: 320px;
+}
+
+.category-id {
+  max-width: 280px;
+}
+
+.category-name,
+.category-id {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

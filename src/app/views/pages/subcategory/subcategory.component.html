@@ -55,20 +55,24 @@
               class="border-bottom"
             >
               <td class="ps-4 py-3">
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center w-100">
                   <div
-                    class="bg-gradient-primary rounded-circle me-3 d-flex align-items-center justify-content-center shadow-sm border-2 border-white"
+                    class="bg-gradient-primary rounded-circle me-3 d-flex align-items-center justify-content-center shadow-sm border-2 border-white flex-shrink-0"
                     style="width: 40px; height: 40px; color: white;"
                   >
                     {{ subCategory.name ? subCategory.name.charAt(0).toUpperCase() : 'S' }}
                   </div>
-                  <div>
-                    <div class="fw-bold text-dark">{{ subCategory.name }}</div>
-                    <small class="text-muted d-block">ID: {{ subCategory._id ? subCategory._id.substring(0, 8) : 'N/A' }}</small>
+                  <div class="overflow-hidden">
+                    <div class="fw-bold text-dark text-truncate subcat-name" [title]="subCategory.name">{{ subCategory.name }}</div>
+                    <small class="text-muted d-block text-truncate subcat-id" [title]="subCategory._id || 'N/A'">ID: {{ subCategory._id ? subCategory._id.substring(0, 12) : 'N/A' }}</small>
                   </div>
                 </div>
               </td>
-              <td class="py-3">{{ subCategory.category_name || 'Unknown' }}</td>
+              <td class="py-3">
+                <span class="text-truncate d-inline-block subcat-cat" [title]="subCategory.category_name || 'Unknown'">
+                  {{ subCategory.category_name || 'Unknown' }}
+                </span>
+              </td>
               <td class="py-3">
                 <span
                   class="badge rounded-pill"

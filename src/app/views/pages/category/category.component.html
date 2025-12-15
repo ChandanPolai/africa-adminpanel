@@ -44,14 +44,14 @@
           <tbody>
             <tr *ngFor="let category of categories.docs | paginate: {itemsPerPage: payload.limit, currentPage: payload.page, totalItems: categories.totalDocs}; let i=index" class="border-bottom">
               <td class="ps-4 py-3">
-                <div class="d-flex align-items-center">
-                  <div class="bg-gradient-primary rounded-circle me-3 d-flex align-items-center justify-content-center shadow-sm  border-2 border-white"
+                <div class="d-flex align-items-center w-100">
+                  <div class="bg-gradient-primary rounded-circle me-3 d-flex align-items-center justify-content-center shadow-sm border-2 border-white flex-shrink-0"
                     style="width: 40px; height: 40px; color: white;">
                     {{category.name ? category.name.charAt(0).toUpperCase() : 'C'}}
                   </div>
-                  <div>
-                    <div class="fw-bold text-dark">{{category.name}}</div>
-                    <small class="text-muted d-block">ID: {{category._id ? category._id.substring(0, 8) : 'N/A'}}</small>
+                  <div class="overflow-hidden">
+                    <div class="fw-bold text-dark text-truncate category-name" [title]="category.name">{{category.name}}</div>
+                    <small class="text-muted d-block text-truncate category-id" [title]="category._id || 'N/A'">ID: {{category._id ? category._id.substring(0, 12) : 'N/A'}}</small>
                   </div>
                 </div>
               </td>

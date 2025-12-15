@@ -138,6 +138,10 @@ export class ParticipationComponent implements OnInit {
     this.currentPage = 1;
   }
 
+  hasData(): boolean {
+    return !!(this.filteredEvents && this.filteredEvents.length > 0);
+  }
+
   onFilterChange(): void {
     this.currentPage = 1;
     this.filterSubject.next();
@@ -207,6 +211,9 @@ export class ParticipationComponent implements OnInit {
   }
 
   async exportToExcel(): Promise<void> {
+    if (!this.hasData()) {
+      return;
+    }
     try {
       this.exporting = true;
       
@@ -237,6 +244,9 @@ export class ParticipationComponent implements OnInit {
   }
 
   async exportToPDF(): Promise<void> {
+    if (!this.hasData()) {
+      return;
+    }
     try {
       this.exporting = true;
       

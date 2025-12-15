@@ -52,5 +52,21 @@
 }
 
 
+/* Truncation helpers for long names/ids */
+.imgcat-name {
+  max-width: 320px;
+}
+
+.imgcat-id {
+  max-width: 280px;
+}
+
+.imgcat-name,
+.imgcat-id {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 

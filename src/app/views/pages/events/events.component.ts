@@ -64,7 +64,7 @@ export class EventsComponent implements OnInit, AfterViewInit {
             name: ['', [Validators.required, Validators.minLength(3)]],
             date: ['', Validators.required],
             startTime: [''],
-            amount: [0],
+            amount: [0, [Validators.max(9999999)]],
             endTime: [''],
             mode: ['online'],
             event_or_meeting: ['', Validators.required],
@@ -74,6 +74,11 @@ export class EventsComponent implements OnInit, AfterViewInit {
             mapURL: [''],
             details: ['']
         });
+
+        this.eventForm.get('paid')?.valueChanges.subscribe(() => {
+            this.updateAmountValidators();
+        });
+        this.updateAmountValidators();
     }
 
     ngOnInit(): void {
@@ -194,6 +199,7 @@ export class EventsComponent implements OnInit, AfterViewInit {
             mapURL: '',
             details: ''
         });
+        this.updateAmountValidators();
         this.thumbnailFile = null;
         this.thumbnailPreview = null;
         this.showEventModal();
@@ -216,6 +222,7 @@ export class EventsComponent implements OnInit, AfterViewInit {
             mapURL: event.mapURL || '',
             details: event.details || ''
         });
+        this.updateAmountValidators();
         this.thumbnailFile = null;
         this.thumbnailPreview = this.getImagePath(event.thumbnail);
         this.showEventModal();
@@ -311,6 +318,19 @@ export class EventsComponent implements OnInit, AfterViewInit {
 
     canSaveEvent(): boolean {
         return this.eventForm.valid;
+    }
+
+    private updateAmountValidators(): void {
+        const amountCtrl = this.eventForm.get('amount');
+        const paid = this.eventForm.get('paid')?.value;
+        if (!amountCtrl) return;
+
+        if (paid) {
+            amountCtrl.setValidators([Validators.required, Validators.min(1), Validators.max(9999999)]);
+        } else {
+            amountCtrl.setValidators([Validators.max(9999999)]);
+        }
+        amountCtrl.updateValueAndValidity({ emitEvent: false });
     }
 
     async saveEvent(): Promise<void> {

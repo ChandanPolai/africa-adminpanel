@@ -209,6 +209,27 @@
     border-color: #6c757d;
     /* transform: translateY(-1px); */
   }
+
+/* Truncation helpers for long names/ids/categories */
+.subcat-name {
+  max-width: 320px;
+}
+
+.subcat-id {
+  max-width: 280px;
+}
+
+.subcat-cat {
+  max-width: 260px;
+}
+
+.subcat-name,
+.subcat-id,
+.subcat-cat {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
   
   /* Search and Filter Section */
   .border-bottom {

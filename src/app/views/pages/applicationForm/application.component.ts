@@ -174,6 +174,11 @@ export class MemberApplicationsComponent implements OnInit {
     this.fetchApplications();
   }
 
+  // Convenience flag for template disables (e.g., export button)
+  get hasData(): boolean {
+    return !!(this.applications && this.applications.docs && this.applications.docs.length > 0);
+  }
+
   exportData(): void {
     const headers = [
       'First Name', 'Last Name', 'InvitedBy','Company Name','chapter', 'Industry','DateOfBirth','Anniversary Date','Spouse Name','Blood Group','Professional Classification',
