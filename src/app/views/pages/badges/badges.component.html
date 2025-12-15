@@ -44,7 +44,7 @@
         </thead>
         
         <tbody>
-          <tr *ngFor="let badge of badges.docs | paginate: { itemsPerPage: payload.limit, currentPage: payload.page, totalItems: badges.totalDocs }; let i=index" class="border-bottom">
+          <tr *ngFor="let badge of badges.docs | paginate: { itemsPerPage: payload.limit, currentPage: payload.page, totalItems: badges.totalDocs }; let i=index" class="border-bottom table-row-hover">
             <td class="ps-4 py-3">
               <div class="d-flex align-items-center">
                 <div class="badge-image-container me-3 position-relative" style="cursor: pointer;" (click)="openImagePreview(badge)">
@@ -66,10 +66,14 @@
               </div>
             </td>
             <td class="py-3">
-              <div class="fw-bold text-dark">{{badge.name || 'Untitled'}}</div>
+              <div class="fw-bold text-dark badge-name text-truncate" [title]="badge.name || 'Untitled'">
+                {{badge.name || 'Untitled'}}
+              </div>
             </td>
             <td class="py-3">
-              <span class="text-muted">{{badge.description || 'N/A'}}</span>
+              <span class="text-muted badge-description text-truncate d-inline-block" [title]="badge.description || 'N/A'">
+                {{badge.description || 'N/A'}}
+              </span>
             </td>
             <td class="py-3">
               <span class="badge rounded-pill" 
@@ -83,12 +87,18 @@
               {{formatDate(badge.createdAt)}}
             </td>
             <td class="text-end pe-4 py-3">
-              <div class="dropdown">
-                <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle" type="button" 
-                  data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="dropdown" [id]="'dropdown-' + i">
+                <button 
+                  class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle" 
+                  type="button" 
+                  [id]="'dropdownButton-' + i"
+                  data-bs-toggle="dropdown" 
+                  [attr.aria-expanded]="'false'">
                   Actions
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                <ul 
+                  class="dropdown-menu dropdown-menu-end shadow-sm border-0"
+                  [attr.aria-labelledby]="'dropdownButton-' + i">
                   <li><a class="dropdown-item" (click)="openEditBadgeModal(badge)" style="cursor: pointer;">
                     <i class="bi bi-pencil-fill me-2 text-primary"></i> Edit
                   </a></li>

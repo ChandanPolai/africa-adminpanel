@@ -139,9 +139,17 @@
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" formControlName="mobile_number" placeholder="Enter mobile number">
-                  <div *ngIf="addVisitorForm.get('mobile_number')?.touched && addVisitorForm.get('mobile_number')?.invalid" class="invalid-feedback">
-                    {{ addVisitorForm.get('mobile_number')?.hasError('required') ? 'Mobile number is required' : 'Invalid mobile number' }}
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    formControlName="mobile_number" 
+                    placeholder="Enter 10 digit mobile number"
+                    maxlength="10"
+                    (input)="onMobileNumberInput($event)">
+                  <small class="form-text text-muted">Enter exactly 10 digits</small>
+                  <div *ngIf="addVisitorForm.get('mobile_number')?.touched && addVisitorForm.get('mobile_number')?.invalid" class="invalid-feedback d-block">
+                    <span *ngIf="addVisitorForm.get('mobile_number')?.hasError('required')">Mobile number is required</span>
+                    <span *ngIf="addVisitorForm.get('mobile_number')?.hasError('pattern')">Mobile number must be exactly 10 digits</span>
                   </div>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -172,9 +180,18 @@
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Fees</label>
-                  <input type="number" class="form-control" formControlName="fees" placeholder="Enter fees">
-                  <div *ngIf="addVisitorForm.get('fees')?.touched && addVisitorForm.get('fees')?.invalid" class="invalid-feedback">
-                    Fees cannot be negative
+                  <input 
+                    type="number" 
+                    class="form-control" 
+                    formControlName="fees" 
+                    placeholder="Enter fees (max 9999999)"
+                    min="0"
+                    max="9999999"
+                    step="0.01">
+                  <small class="form-text text-muted">Maximum 7 digits (9999999)</small>
+                  <div *ngIf="addVisitorForm.get('fees')?.touched && addVisitorForm.get('fees')?.invalid" class="invalid-feedback d-block">
+                    <span *ngIf="addVisitorForm.get('fees')?.hasError('min')">Fees cannot be negative</span>
+                    <span *ngIf="addVisitorForm.get('fees')?.hasError('max')">Fees cannot exceed 9999999</span>
                   </div>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -313,8 +330,8 @@
     <div *ngIf="!loading && (!visitors.docs || visitors.docs.length === 0)" class="text-center my-5 py-4 px-4">
       <div class="empty-state">
         <i class="bi bi-people fs-1 text-muted mb-3"></i>
-        <h5>No Visitors Found</h5>
-        <p class="text-muted">Try adjusting your filter criteria or date range.</p>
+        <h5>No Visitors Available</h5>
+        <p class="text-muted">There are no visitors found for the selected criteria. Please try adjusting your filters or date range.</p>
         <button class="btn btn-outline-primary rounded-pill mt-3" (click)="resetFilters()">
           <i class="bi bi-arrow-repeat me-2"></i>Reset Filters
         </button>

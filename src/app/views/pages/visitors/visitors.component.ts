@@ -79,7 +79,7 @@ export class VisitorsComponent implements OnInit {
       business_type: [''],
       address: [''],
       pincode: ['', [Validators.pattern(/^\d{6}$/)]],
-      fees: [0, [Validators.min(0)]],
+      fees: [0, [Validators.min(0), Validators.max(9999999)]],
       paid: [false],
     });
 
@@ -104,18 +104,61 @@ export class VisitorsComponent implements OnInit {
         endDate: this.filters.endDate || undefined,
       };
       const response = await this.visitorService.getAllVisitors(requestParams);
+      
+      // Handle response structure - check if it's wrapped in a data property or success response
+      let visitorsData: VisitorResponse = response;
+      if (response && typeof response === 'object' && 'data' in response && (response as any).data) {
+        visitorsData = (response as any).data as VisitorResponse;
+      } else if (response && typeof response === 'object' && 'success' in response && (response as any).success && 'data' in response) {
+        const responseData = (response as any).data;
+        visitorsData = responseData || {
+          docs: [],
+          totalDocs: 0,
+          limit: 10,
+          page: 1,
+          totalPages: 0,
+          hasPrevPage: false,
+          hasNextPage: false,
+          prevPage: null,
+          nextPage: null,
+        } as VisitorResponse;
+      }
+      
+      // Ensure docs array exists
+      const docs = (visitorsData?.docs || []).filter((visitor) => visitor && visitor._id && visitor.name);
+      
       this.visitors = {
-        ...response,
-        docs: response.docs.filter((visitor) => visitor && visitor._id && visitor.name),
+        docs: docs,
+        totalDocs: visitorsData?.totalDocs || 0,
+        limit: visitorsData?.limit || this.filters.limit,
+        page: visitorsData?.page || this.filters.page,
+        totalPages: visitorsData?.totalPages || 0,
+        hasPrevPage: visitorsData?.hasPrevPage || false,
+        hasNextPage: visitorsData?.hasNextPage || false,
+        prevPage: visitorsData?.prevPage || null,
+        nextPage: visitorsData?.nextPage || null,
       };
+      
       // Sync filters with server response
       this.filters.page = this.visitors.page;
       this.filters.limit = this.visitors.limit;
       console.log('Visitors response:', this.visitors); // Debug log
       this.cdr.detectChanges();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching visitors:', error);
-      swalHelper.showToast('Failed to fetch visitors', 'error');
+      // Only show error toast if it's a real network/server error, not just empty data
+      // Check if error has status code and it's not 200/404 (404 means not found, which is OK for empty results)
+      if (error && typeof error === 'object') {
+        const status = error.status || error.statusCode;
+        if (status && status !== 200 && status !== 404 && status < 500) {
+          // Client error (4xx) but not 404 - show error
+          swalHelper.showToast('Failed to fetch visitors', 'error');
+        } else if (status && status >= 500) {
+          // Server error - show error
+          swalHelper.showToast('Failed to fetch visitors', 'error');
+        }
+        // If status is 200 or 404, or no status, don't show error - just empty data
+      }
     } finally {
       this.loading = false;
       this.cdr.detectChanges();
@@ -167,6 +210,15 @@ export class VisitorsComponent implements OnInit {
       this.modalLoading = false;
       this.cdr.detectChanges();
     }
+  }
+
+  onMobileNumberInput(event: any): void {
+    const value = event.target.value;
+    // Only allow digits
+    const digitsOnly = value.replace(/\D/g, '');
+    // Limit to 10 digits
+    const limitedValue = digitsOnly.slice(0, 10);
+    this.addVisitorForm.patchValue({ mobile_number: limitedValue }, { emitEvent: false });
   }
 
   async onUserSearch(event: { term: string; items: any[] }): Promise<void> {
