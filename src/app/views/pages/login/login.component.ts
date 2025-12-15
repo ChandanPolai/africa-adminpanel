@@ -46,7 +46,7 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private storage: AppStorage
   ) {
-    document.body.style.backgroundColor = '#3949AB';
+    document.body.style.backgroundColor = '#B51F24';
   }
 
   ngOnInit(): void {

@@ -1,12 +1,12 @@
-// Variables - Africa-Community Green & Red Theme
-$primary-color: #228B22; // Forest Green
-$secondary-color: #DC143C; // Crimson Red
-$accent-color: #FF6347; // Tomato Red
+// Variables - Africa-Community Theme
+$primary-color: #B51F24; // Primary Red/Maroon
+$secondary-color: #B51F24; // Secondary Red/Maroon
+$accent-color: #B51F24; // Accent Red/Maroon
 $text-color: #333;
 $light-text: #666;
-$error-color: #DC143C;
+$error-color: #B51F24;
 $white: #fff;
-$box-shadow: 0 10px 25px rgba(34, 139, 34, 0.3);
+$box-shadow: 0 10px 25px rgba(181, 31, 36, 0.3);
 $transition: all 0.3s ease;
 
 // Mixins
@@ -20,7 +20,7 @@ $transition: all 0.3s ease;
 .login-container {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
   padding: 0;
   display: flex;
   align-items: stretch;
@@ -55,7 +55,7 @@ $transition: all 0.3s ease;
   flex: 1;
   @include flex-center;
   padding: 20px;
-  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
 }
 
 // Card Styling
@@ -95,7 +95,7 @@ $transition: all 0.3s ease;
 .login-header {
   padding: 30px 30px 20px;
   text-align: center;
-  background: linear-gradient(135deg, rgba(34, 139, 34, 0.1) 0%, rgba(220, 20, 60, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(181, 31, 36, 0.1) 0%, rgba(181, 31, 36, 0.05) 100%);
 }
 
 .logo-container {
@@ -151,7 +151,7 @@ $transition: all 0.3s ease;
 
 .app-name {
   font-size: 24px;
-  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -238,7 +238,7 @@ $transition: all 0.3s ease;
   padding: 14px;
   border: none;
   border-radius: 8px;
-  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
   color: $white;
   font-size: 16px;
   font-weight: 500;
@@ -246,9 +246,9 @@ $transition: all 0.3s ease;
   transition: $transition;
   
   &:hover {
-    background: linear-gradient(135deg, $secondary-color 0%, $primary-color 100%);
+    background: linear-gradient(135deg, darken($primary-color, 5%) 0%, $primary-color 100%);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(34, 139, 34, 0.4);
+    box-shadow: 0 8px 20px rgba(181, 31, 36, 0.4);
   }
   
   &:active {
@@ -284,6 +284,24 @@ $transition: all 0.3s ease;
   to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+// Forgot Password Link
+.forgot-password {
+  text-align: center;
+  margin-top: 15px;
+  
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    font-size: 14px;
+    transition: $transition;
+    
+    &:hover {
+      color: darken($primary-color, 10%);
+      text-decoration: underline;
+    }
+  }
+}
+
 // Footer
 .login-footer {
   text-align: center;
@@ -296,7 +314,7 @@ $transition: all 0.3s ease;
     text-decoration: none;
     
     &:hover {
-      color: $secondary-color;
+      color: darken($primary-color, 10%);
       text-decoration: underline;
     }
   }
