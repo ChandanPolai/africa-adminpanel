@@ -147,7 +147,8 @@ export class ExportService {
         halign: 'center'
       },
       bodyStyles: {
-        textColor: [60, 60, 60]
+        textColor: [60, 60, 60],
+        halign: 'center'
       },
       alternateRowStyles: {
         fillColor: [240, 240, 240]

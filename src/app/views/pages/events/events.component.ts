@@ -636,7 +636,7 @@ export class EventsComponent implements OnInit, AfterViewInit {
     // Modified showVisitorQRCode method - now generates and downloads directly
     async showVisitorQRCode(event: Event): Promise<void> {
         try {
-            const qrData = `https://gbs-connect.com/visitor-scan?eventId=${event._id}`;
+            const qrData = `https://community.itfuturz.in/visitor-scan?eventId=${event._id}`;
             
             console.log('Visitor QR Data:', qrData);
             const qrImageWithTitle = await this.generateQRWithTitle(

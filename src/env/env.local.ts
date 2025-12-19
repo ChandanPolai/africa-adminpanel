@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  baseURL: 'https://community.itfuturz.in',
+  baseURL: 'http://localhost:2014',
   route: 'admin',
-  imageUrl:'https://community.itfuturz.in/',
+  imageUrl:'http://localhost:2014/',
   };
 
 

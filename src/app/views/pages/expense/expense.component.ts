@@ -415,6 +415,6 @@ export class ExpenseComponent implements OnInit, AfterViewInit {
 
   getFileUrl(filePath: string): string {
     if (!filePath) return '';
-    return filePath.startsWith('http') ? filePath : `https://gbs-connect.com/${filePath}`;
+    return filePath.startsWith('http') ? filePath : `https://community.itfuturz.in/${filePath}`;
   }
 }
