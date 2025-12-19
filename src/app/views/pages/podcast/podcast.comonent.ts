@@ -195,6 +195,7 @@ export class PodcastsComponent implements OnInit, AfterViewInit {
     this.selectedPodcast = podcast;
     this.newPodcast = { ...podcast, podcasterImage: '' };
     this.imagePreview = podcast.podcasterImage ? this.getImageUrl(podcast.podcasterImage) : null;
+    this.selectedFile = null; // Reset selected file when opening edit modal
     this.formSubmitted = false;
     this.showModal();
   }
@@ -249,6 +250,13 @@ export class PodcastsComponent implements OnInit, AfterViewInit {
     this.selectedFile = null;
     this.imagePreview = null;
     this.formSubmitted = false;
+    // Reset file input element
+    setTimeout(() => {
+      const fileInput = document.getElementById('podcasterImage') as HTMLInputElement;
+      if (fileInput) {
+        fileInput.value = '';
+      }
+    }, 100);
   }
 
   resetSlotsData(): void {
@@ -592,6 +600,30 @@ export class PodcastsComponent implements OnInit, AfterViewInit {
     this.slotFormData.dates = event.map((date: string) => {
       return new Date(date).toISOString().split('T')[0];
     });
+  }
+
+  onNumberInput(event: any, field: 'duration' | 'capacity'): void {
+    const value = event.target.value;
+    // Remove any non-numeric characters
+    const numericValue = value.replace(/[^0-9]/g, '');
+    
+    // Limit to 10 digits
+    if (numericValue.length > 10) {
+      const limitedValue = numericValue.substring(0, 10);
+      event.target.value = limitedValue;
+      if (field === 'duration') {
+        this.slotFormData.duration = parseInt(limitedValue) || 0;
+      } else if (field === 'capacity') {
+        this.slotFormData.capacity = parseInt(limitedValue) || 0;
+      }
+      swalHelper.showToast('Maximum 10 digits allowed', 'warning');
+    } else {
+      if (field === 'duration') {
+        this.slotFormData.duration = numericValue ? parseInt(numericValue) : 0;
+      } else if (field === 'capacity') {
+        this.slotFormData.capacity = numericValue ? parseInt(numericValue) : 0;
+      }
+    }
   }
 
   async generateSlots(): Promise<void> {

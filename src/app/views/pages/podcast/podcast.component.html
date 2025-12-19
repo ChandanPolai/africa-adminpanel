@@ -368,12 +368,14 @@
   <div class="col-md-6">
   <label for="duration" class="form-label">Duration (minutes) <span class="text-danger">*</span></label>
   <input type="number" class="form-control" id="duration"
-  [(ngModel)]="slotFormData.duration" min="1" required>
+  [(ngModel)]="slotFormData.duration" min="1" max="9999999999" maxlength="10" 
+  (input)="onNumberInput($event, 'duration')" required>
   </div>
   <div class="col-md-6">
   <label for="capacity" class="form-label">Capacity <span class="text-danger">*</span></label>
   <input type="number" class="form-control" id="capacity"
-  [(ngModel)]="slotFormData.capacity" min="1" required>
+  [(ngModel)]="slotFormData.capacity" min="1" max="9999999999" maxlength="10"
+  (input)="onNumberInput($event, 'capacity')" required>
   </div>
   </div>
   </div>
