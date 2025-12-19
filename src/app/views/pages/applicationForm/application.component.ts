@@ -38,10 +38,12 @@ export class MemberApplicationsComponent implements OnInit {
   convertLoading: { [key: string]: boolean } = {};
   searchQuery: string = '';
   selectedMember: MemberApplication | null = null;
+  selectedApplicationForView: MemberApplication | null = null;
   selectedImage: string | null = null;
   selectedImageTitle: string = '';
   imageModal: any;
   editModal: any;
+  viewDetailsModal: any;
   editApplication: MemberApplication = {
     _id: '',
     chapter: '',
@@ -110,11 +112,15 @@ export class MemberApplicationsComponent implements OnInit {
     setTimeout(() => {
       const imageModalElement = document.getElementById('imageModal');
       const editModalElement = document.getElementById('editModal');
+      const viewDetailsModalElement = document.getElementById('viewDetailsModal');
       if (imageModalElement) {
         this.imageModal = new bootstrap.Modal(imageModalElement);
       }
       if (editModalElement) {
         this.editModal = new bootstrap.Modal(editModalElement);
+      }
+      if (viewDetailsModalElement) {
+        this.viewDetailsModal = new bootstrap.Modal(viewDetailsModalElement);
       }
     }, 300);
   }
@@ -243,11 +249,36 @@ export class MemberApplicationsComponent implements OnInit {
     // Deep copy to avoid modifying original data
     this.editApplication = JSON.parse(JSON.stringify(app));
     this.fileInputs = {};
-    this.editModal.show();
+    this.cdr.detectChanges();
+    if (this.editModal) {
+      this.editModal.show();
+    } else {
+      setTimeout(() => {
+        const editModalElement = document.getElementById('editModal');
+        if (editModalElement) {
+          this.editModal = new bootstrap.Modal(editModalElement);
+          this.editModal.show();
+        }
+      }, 100);
+    }
   }
 
   closeEditModal(): void {
-    this.editModal.hide();
+    if (this.editModal) {
+      this.editModal.hide();
+    } else {
+      const editModalElement = document.getElementById('editModal');
+      if (editModalElement) {
+        const modalInstance = bootstrap.Modal.getInstance(editModalElement);
+        if (modalInstance) {
+          modalInstance.hide();
+        }
+      }
+    }
+    this.resetEditForm();
+  }
+
+  resetEditForm(): void {
     this.editApplication = {
       _id: '',
       chapter: '',
@@ -282,6 +313,13 @@ export class MemberApplicationsComponent implements OnInit {
       }
     };
     this.fileInputs = {};
+    // Reset file inputs
+    setTimeout(() => {
+      const aadhaarInput = document.getElementById('aadhaarPhoto') as HTMLInputElement;
+      const livePhotoInput = document.getElementById('livePhoto') as HTMLInputElement;
+      if (aadhaarInput) aadhaarInput.value = '';
+      if (livePhotoInput) livePhotoInput.value = '';
+    }, 100);
   }
 
   onFileChange(event: Event, field: 'aadhaarPhoto' | 'livePhoto'): void {
@@ -323,9 +361,13 @@ export class MemberApplicationsComponent implements OnInit {
       }
 
       const response = await this.memberApplicationService.editApplication(formData);
-      swalHelper.showToast('Application updated successfully', 'success');
-      this.closeEditModal();
-      await this.fetchApplications();
+      if (response && response.success) {
+        swalHelper.showToast('Application updated successfully', 'success');
+        this.closeEditModal();
+        await this.fetchApplications();
+      } else {
+        swalHelper.showToast(response?.message || 'Failed to update application', 'error');
+      }
     } catch (error: any) {
       console.error('Error updating application:', error);
       swalHelper.showToast(error.message || 'Failed to update application', 'error');
@@ -365,5 +407,36 @@ export class MemberApplicationsComponent implements OnInit {
     if (target) {
       target.src = 'assets/images/placeholder-image.png';
     }
+  }
+
+  openViewDetailsModal(app: MemberApplication): void {
+    this.selectedApplicationForView = JSON.parse(JSON.stringify(app));
+    this.cdr.detectChanges();
+    if (this.viewDetailsModal) {
+      this.viewDetailsModal.show();
+    } else {
+      setTimeout(() => {
+        const viewDetailsModalElement = document.getElementById('viewDetailsModal');
+        if (viewDetailsModalElement) {
+          this.viewDetailsModal = new bootstrap.Modal(viewDetailsModalElement);
+          this.viewDetailsModal.show();
+        }
+      }, 100);
+    }
+  }
+
+  closeViewDetailsModal(): void {
+    if (this.viewDetailsModal) {
+      this.viewDetailsModal.hide();
+    } else {
+      const viewDetailsModalElement = document.getElementById('viewDetailsModal');
+      if (viewDetailsModalElement) {
+        const modalInstance = bootstrap.Modal.getInstance(viewDetailsModalElement);
+        if (modalInstance) {
+          modalInstance.hide();
+        }
+      }
+    }
+    this.selectedApplicationForView = null;
   }
 }

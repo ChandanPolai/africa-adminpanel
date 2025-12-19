@@ -36,95 +36,65 @@
       <table class="table table-hover align-middle mb-0">
         <thead class="bg-light">
           <tr>
-            <th class="ps-4 py-3 sr-no-col">Sr. No</th>
-            <th class="py-3 applicant-info">Applicant</th>
-            <th class="py-3 company-info">Company</th>
-            <th class="py-3">Industry</th>
-            <th class="py-3">Address</th>
-            <th class="py-3 contact-info">Contact</th>
-            <th class="py-3 personal-info">Personal Info</th>
-            <th class="py-3 documents-cell">Documents</th>
-            <th class="py-3">Invited By</th>
-            <th class="py-3 references-cell">References</th>
+            <th class="ps-4 py-3">Sr. No</th>
+            <th class="py-3">Applicant</th>
+            <th class="py-3">Company</th>
+            <th class="py-3">Contact</th>
             <th class="py-3">Chapter</th>
-            <th class="py-3 actions-cell">Actions</th>
+            <th class="text-end pe-4 py-3">Actions</th>
           </tr>
         </thead>
         
         <tbody>
           <tr *ngFor="let app of applications.docs | paginate: {itemsPerPage: payload.limit, currentPage: payload.page, totalItems: applications.totalDocs}; let i=index" class="border-bottom">
-            <td class="ps-4 py-3 sr-no-col">
+            <td class="ps-4 py-3">
               {{ (payload.page - 1) * payload.limit + i + 1 }}
             </td>
-            <td class="py-3 applicant-info">
+            <td class="py-3">
               <div class="d-flex align-items-center">
-                <!-- <div class="user-avatar me-3">
-                  {{ (payload.page - 1) * payload.limit + i + 1 }}
-                </div> -->
+                <div class="bg-gradient-primary rounded-circle me-2 d-flex align-items-center justify-content-center shadow-sm border-2 border-white"
+                  style="width: 40px; height: 40px; color: white;">
+                  {{app.applicant.firstName ? app.applicant.firstName.charAt(0).toUpperCase() : 'U'}}
+                </div>
                 <div>
                   <div class="fw-bold text-dark">{{app.applicant.firstName}} {{app.applicant.lastName}}</div>
                   <small class="text-muted d-block">ID: {{app._id ? app._id.substring(0, 8) : 'N/A'}}</small>
                 </div>
               </div>
             </td>
-            <td class="py-3 company-info">
-              <div>{{app.applicant.companyName}}</div>
-              <small class="text-muted">{{app.applicant.professionalClassification}}</small>
-            </td>
-            <td class="py-3">{{app.applicant.industry}}</td>
             <td class="py-3">
-              <div>{{app.applicant.businessAddress.addressLine1}}</div>
-              <small class="text-muted">{{app.applicant.businessAddress.city}}, {{app.applicant.businessAddress.state}} {{app.applicant.businessAddress.postalCode}}</small>
+              <div class="fw-bold text-dark">{{app.applicant.companyName || 'N/A'}}</div>
+              <small class="text-muted d-block">{{app.applicant.industry || 'N/A'}}</small>
             </td>
-            <td class="py-3 contact-info">
-              <div>{{app.applicant.email}} </div>
+            <td class="py-3">
+              <div class="text-dark">{{app.applicant.email}}</div>
               <small class="text-muted d-block">{{app.applicant.mobileNumber}}</small>
-              <small class="text-muted d-block" *ngIf="app.applicant.gstNumber">GST: {{app.applicant.gstNumber}}</small>
             </td>
-            <td class="py-3 personal-info">
-              <small class="text-muted d-block mt-1">Date of Birth: {{ app.applicant.dateOfBirth ? (app.applicant.dateOfBirth | date: 'dd/MM/yyyy') : 'N/A' }}</small>
-              <small class="text-muted d-block mt-1">Spouse Name: {{ app.applicant.spouseName || 'N/A' }}</small>
-              <small class="text-muted d-block mt-1">Anniversary Date: {{ app.applicant.anniversaryDate ? (app.applicant.anniversaryDate | date: 'dd/MM/yyyy') : 'N/A' }}</small>
-              <small class="text-muted d-block mt-1">Blood Group: {{ app.applicant.bloodGroup || 'N/A' }}</small>
-             
+            <td class="py-3">
+              <span class="badge rounded-pill bg-primary">{{app.chapter || 'N/A'}}</span>
             </td>
-             
-            <td class="py-3 documents-cell">
-              <div class="document-images">
-                <img [src]="getImageUrl(app.applicant.aadhaarPhoto)" 
-                     [alt]="'Aadhaar Photo'" 
-                     style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd;"
-                     (click)="viewImage(app.applicant.aadhaarPhoto, 'Aadhaar Photo')"
-                     (error)="onImageError($event)">
-                <img [src]="getImageUrl(app.applicant.livePhoto)" 
-                     [alt]="'Live Photo'" 
-                     style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd;"
-                     (click)="viewImage(app.applicant.livePhoto, 'Live Photo')"
-                     (error)="onImageError($event)">
-              </div>
-              <small class="text-muted d-block mt-1">Aadhaar: {{app.applicant.adhaarNumber}}</small>
-            </td>
-            <td class="py-3">{{app.invitedBy}}</td>
-            <td class="py-3 references-cell">
-              <div *ngIf="app.references.reference1.firstName">
-                {{app.references.reference1.firstName}} {{app.references.reference1.lastName}}
-                <small class="text-muted d-block">{{app.references.reference1.phone}}</small>
-              </div>
-              <div *ngIf="app.references.reference2.firstName" class="mt-1">
-                {{app.references.reference2.firstName}} {{app.references.reference2.lastName}}
-                <small class="text-muted d-block">{{app.references.reference2.phone}}</small>
-              </div>
-            </td>
-            <td class="py-3">{{app.chapter}}</td>
-            <td class="py-3 actions-cell">
-              <div class="d-flex gap-2 flex-column flex-md-row">
-                <button class="btn btn-outline-primary btn-sm rounded-pill" (click)="openEditModal(app)">
-                  <i class="bi bi-pencil me-1"></i> Edit
+            <td class="text-end pe-4 py-3">
+              <div class="dropdown">
+                <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle" type="button" 
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  Actions
                 </button>
-                <button class="btn btn-outline-success btn-sm rounded-pill" (click)="convertToUser(app._id)" [disabled]="convertLoading[app._id]">
-                  <span *ngIf="convertLoading[app._id]" class="spinner-border spinner-border-sm me-1"></span>
-                  <i class="bi bi-person-check me-1"></i> Convert
-                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                  <li><a class="dropdown-item" (click)="openViewDetailsModal(app)" style="cursor: pointer;">
+                    <i class="bi bi-eye-fill me-2 text-info"></i> View
+                  </a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" (click)="openEditModal(app)" style="cursor: pointer;">
+                    <i class="bi bi-pencil-fill me-2 text-primary"></i> Edit
+                  </a></li>
+                  <li><a class="dropdown-item" (click)="convertToUser(app._id)" 
+                    [class.disabled]="convertLoading[app._id]" 
+                    [attr.aria-disabled]="convertLoading[app._id]"
+                    style="cursor: pointer;">
+                    <span *ngIf="convertLoading[app._id]" class="spinner-border spinner-border-sm me-2"></span>
+                    <i class="bi bi-person-check me-2 text-success"></i> Convert to User
+                  </a></li>
+                </ul>
               </div>
             </td>
           </tr>
@@ -170,13 +140,171 @@
   </div>
 </div>
 
+<!-- View Details Modal -->
+<div class="modal fade" id="viewDetailsModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+  aria-labelledby="viewDetailsModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title" id="viewDetailsModalTitle">
+          <i class="bi bi-eye-fill me-2"></i>Application Details
+        </h5>
+        <button type="button" class="btn-close" (click)="closeViewDetailsModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0" *ngIf="selectedApplicationForView">
+        <div class="row g-0">
+          <div class="col-md-8">
+            <div class="p-4">
+              <h4 class="fw-bold text-dark mb-3">{{selectedApplicationForView.applicant.firstName}} {{selectedApplicationForView.applicant.lastName}}</h4>
+              
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h6 class="text-muted mb-2">Company</h6>
+                  <p class="text-dark">{{selectedApplicationForView.applicant.companyName || 'N/A'}}</p>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="text-muted mb-2">Industry</h6>
+                  <p class="text-dark">{{selectedApplicationForView.applicant.industry || 'N/A'}}</p>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h6 class="text-muted mb-2">Email</h6>
+                  <p class="text-dark">{{selectedApplicationForView.applicant.email}}</p>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="text-muted mb-2">Mobile Number</h6>
+                  <p class="text-dark">{{selectedApplicationForView.applicant.mobileNumber}}</p>
+                </div>
+              </div>
+
+              <div class="row mb-3" *ngIf="selectedApplicationForView.applicant.gstNumber">
+                <div class="col-md-6">
+                  <h6 class="text-muted mb-2">GST Number</h6>
+                  <p class="text-dark">{{selectedApplicationForView.applicant.gstNumber}}</p>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="text-muted mb-2">Aadhaar Number</h6>
+                  <p class="text-dark">{{selectedApplicationForView.applicant.adhaarNumber}}</p>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="text-muted mb-2">Business Address</h6>
+                <p class="text-dark">
+                  {{selectedApplicationForView.applicant.businessAddress.addressLine1 || 'N/A'}}<br>
+                  <span *ngIf="selectedApplicationForView.applicant.businessAddress.city || selectedApplicationForView.applicant.businessAddress.state">
+                    {{selectedApplicationForView.applicant.businessAddress.city || ''}}{{selectedApplicationForView.applicant.businessAddress.city && selectedApplicationForView.applicant.businessAddress.state ? ', ' : ''}}{{selectedApplicationForView.applicant.businessAddress.state || ''}} {{selectedApplicationForView.applicant.businessAddress.postalCode || ''}}
+                  </span>
+                  <span *ngIf="!selectedApplicationForView.applicant.businessAddress.city && !selectedApplicationForView.applicant.businessAddress.state">N/A</span>
+                </p>
+              </div>
+              
+              <div class="mb-3" *ngIf="selectedApplicationForView.applicant.professionalClassification">
+                <h6 class="text-muted mb-2">Professional Classification</h6>
+                <p class="text-dark">{{selectedApplicationForView.applicant.professionalClassification}}</p>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h6 class="text-muted mb-2">Date of Birth</h6>
+                  <p class="text-dark">{{selectedApplicationForView.applicant.dateOfBirth ? (selectedApplicationForView.applicant.dateOfBirth | date: 'dd/MM/yyyy') : 'N/A'}}</p>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="text-muted mb-2">Anniversary Date</h6>
+                  <p class="text-dark">{{selectedApplicationForView.applicant.anniversaryDate ? (selectedApplicationForView.applicant.anniversaryDate | date: 'dd/MM/yyyy') : 'N/A'}}</p>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h6 class="text-muted mb-2">Spouse Name</h6>
+                  <p class="text-dark">{{selectedApplicationForView.applicant.spouseName || 'N/A'}}</p>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="text-muted mb-2">Blood Group</h6>
+                  <p class="text-dark">{{selectedApplicationForView.applicant.bloodGroup || 'N/A'}}</p>
+                </div>
+              </div>
+
+              <div class="mb-3" *ngIf="selectedApplicationForView.references.reference1.firstName">
+                <h6 class="text-muted mb-2">Reference 1</h6>
+                <p class="text-dark">
+                  {{selectedApplicationForView.references.reference1.firstName}} {{selectedApplicationForView.references.reference1.lastName}}<br>
+                  <small class="text-muted">Phone: {{selectedApplicationForView.references.reference1.phone}}</small>
+                </p>
+              </div>
+
+              <div class="mb-3" *ngIf="selectedApplicationForView.references.reference2.firstName">
+                <h6 class="text-muted mb-2">Reference 2</h6>
+                <p class="text-dark">
+                  {{selectedApplicationForView.references.reference2.firstName}} {{selectedApplicationForView.references.reference2.lastName}}<br>
+                  <small class="text-muted">Phone: {{selectedApplicationForView.references.reference2.phone}}</small>
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4 bg-light">
+            <div class="p-4">
+              <h6 class="text-muted mb-3">Documents</h6>
+              <div class="mb-3">
+                <img [src]="getImageUrl(selectedApplicationForView.applicant.aadhaarPhoto)" 
+                     [alt]="'Aadhaar Photo'" 
+                     class="img-thumbnail w-100 mb-2"
+                     style="cursor: pointer; max-height: 200px; object-fit: contain;"
+                     (click)="viewImage(selectedApplicationForView.applicant.aadhaarPhoto, 'Aadhaar Photo')"
+                     (error)="onImageError($event)">
+                <small class="text-muted d-block">Aadhaar Photo</small>
+              </div>
+              <div class="mb-3">
+                <img [src]="getImageUrl(selectedApplicationForView.applicant.livePhoto)" 
+                     [alt]="'Live Photo'" 
+                     class="img-thumbnail w-100 mb-2"
+                     style="cursor: pointer; max-height: 200px; object-fit: contain;"
+                     (click)="viewImage(selectedApplicationForView.applicant.livePhoto, 'Live Photo')"
+                     (error)="onImageError($event)">
+                <small class="text-muted d-block">Live Photo</small>
+              </div>
+
+              <div class="mt-4">
+                <h6 class="text-muted mb-2">Chapter</h6>
+                <span class="badge rounded-pill bg-primary">{{selectedApplicationForView.chapter || 'N/A'}}</span>
+              </div>
+
+              <div class="mt-3">
+                <h6 class="text-muted mb-2">Invited By</h6>
+                <p class="text-dark">{{selectedApplicationForView.invitedBy || 'N/A'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-outline-primary rounded-pill me-2" 
+        *ngIf="selectedApplicationForView"
+        (click)="openEditModal(selectedApplicationForView)" 
+        data-bs-dismiss="modal">
+          <i class="bi bi-pencil-fill me-1"></i>Edit Application
+        </button>
+        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeViewDetailsModal()">
+          <i class="bi bi-x-circle me-1"></i>Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Edit Application Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
   aria-labelledby="editModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
       <div class="modal-header bg-light">
-        <h5 class="modal-title" id="editModalTitle">Edit Member Application</h5>
+        <h5 class="modal-title" id="editModalTitle">
+          <i class="bi bi-pencil-fill me-2"></i>Edit Member Application
+        </h5>
         <button type="button" class="btn-close" (click)="closeEditModal()" aria-label="Close"></button>
       </div>
       <div class="modal-body p-4">
@@ -184,7 +312,7 @@
           <div class="row">
             <!-- Applicant Details -->
             <div class="col-md-6">
-              <h6 class="fw-bold mb-3">Applicant Details</h6>
+              <h6 class="fw-bold mb-3 text-primary">Applicant Details</h6>
               <div class="mb-3">
                 <label for="firstName" class="form-label">First Name</label>
                 <input type="text" class="form-control" id="firstName" [(ngModel)]="editApplication.applicant.firstName" name="firstName" required #firstName="ngModel" [ngClass]="{'is-invalid': firstName.invalid && (firstName.dirty || firstName.touched)}">
@@ -257,7 +385,7 @@
 
             <!-- Address and File Uploads -->
             <div class="col-md-6">
-              <h6 class="fw-bold mb-3">Business Address</h6>
+              <h6 class="fw-bold mb-3 text-primary">Business Address</h6>
               <div class="mb-3">
                 <label for="addressLine1" class="form-label">Address Line 1</label>
                 <input type="text" class="form-control" id="addressLine1" [(ngModel)]="editApplication.applicant.businessAddress.addressLine1" name="addressLine1">
@@ -286,7 +414,7 @@
                 </div>
               </div>
 
-              <h6 class="fw-bold mb-3 mt-4">Documents</h6>
+              <h6 class="fw-bold mb-3 mt-4 text-primary">Documents</h6>
               <div class="mb-3">
                 <label for="aadhaarPhoto" class="form-label">Aadhaar Photo</label>
                 <input type="file" class="form-control" id="aadhaarPhoto" (change)="onFileChange($event, 'aadhaarPhoto')" accept="image/*">
@@ -298,7 +426,7 @@
                 <small *ngIf="editApplication.applicant.livePhoto" class="text-muted">Current: <a [href]="getImageUrl(editApplication.applicant.livePhoto)" target="_blank">View Live Photo</a></small>
               </div>
 
-              <h6 class="fw-bold mb-3 mt-4">Chapter</h6>
+              <h6 class="fw-bold mb-3 mt-4 text-primary">Chapter</h6>
               <div class="mb-3">
                 <label for="chapter" class="form-label">Chapter</label>
                 <ng-select [items]="chapters" bindLabel="name" bindValue="name" [(ngModel)]="editApplication.chapter" name="chapter" required #chapter="ngModel" [ngClass]="{'is-invalid': chapter.invalid && (chapter.dirty || chapter.touched)}">
@@ -310,16 +438,17 @@
             </div>
           </div>
 
-          <div class="mt-4">
-            <button type="submit" class="btn btn-primary rounded-pill px-4" [disabled]="editForm.invalid || editLoading">
-              <span *ngIf="editLoading" class="spinner-border spinner-border-sm me-2" role="status"></span>
-              Save Changes
-            </button>
-            <button type="button" class="btn btn-outline-secondary rounded-pill ms-2" (click)="closeEditModal()">
-              Cancel
-            </button>
-          </div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="closeEditModal()">
+          <i class="bi bi-x-circle me-1"></i> Cancel
+        </button>
+        <button type="button" class="btn btn-primary rounded-pill" (click)="submitEdit()" 
+                [disabled]="editForm.invalid || editLoading">
+          <span *ngIf="editLoading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+          <i class="bi bi-save me-1"></i> {{editLoading ? 'Saving...' : 'Save Changes'}}
+        </button>
       </div>
     </div>
   </div>
