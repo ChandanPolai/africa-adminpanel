@@ -176,6 +176,33 @@ export class BannersComponent implements OnInit, AfterViewInit {
   }
 }
 
+  onContactInput(event: any): void {
+    const value = event.target.value;
+    // Check if the value contains only numbers
+    const numericValue = value.replace(/[^0-9]/g, '');
+    
+    // If the input is purely numeric, limit to 10 digits
+    if (numericValue.length > 0 && value === numericValue) {
+      if (numericValue.length > 10) {
+        const limitedValue = numericValue.substring(0, 10);
+        event.target.value = limitedValue;
+        this.newBanner.contact = limitedValue;
+        swalHelper.showToast('Maximum 10 digits allowed for contact numbers', 'warning');
+      } else {
+        this.newBanner.contact = numericValue;
+      }
+    } else {
+      // If it contains non-numeric characters, allow it but limit total length
+      if (value.length > 50) {
+        const limitedValue = value.substring(0, 50);
+        event.target.value = limitedValue;
+        this.newBanner.contact = limitedValue;
+      } else {
+        this.newBanner.contact = value;
+      }
+    }
+  }
+
   openAddBannerModal(): void {
     this.editMode = false;
     this.resetForm();
