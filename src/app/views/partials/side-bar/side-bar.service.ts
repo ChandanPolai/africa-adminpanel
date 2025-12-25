@@ -181,6 +181,16 @@ export class SideBarService {
               link: 'attendanceRecord',
               icon: 'clipboard',
             },
+            {
+              title: 'Complaints',
+              link: 'complaints',
+              icon: 'message-square',
+            },
+            {
+              title: 'Suggestions',
+              link: 'suggestions',
+              icon: 'message-square',
+            },
             // {
             //   title: 'Fees Record',
             //   link: 'fees',

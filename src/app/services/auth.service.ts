@@ -569,6 +569,184 @@ async updateUser(userId: string, data: { name: string; mobile_number: string; em
       throw error;
     }
   }
+
+  // Complaints methods
+  async getAllComplaints(params: { page?: number; limit?: number; status?: string; category?: string; search?: string }): Promise<any> {
+    try {
+      this.getHeaders();
+      let queryParams = `?page=${params.page || 1}&limit=${params.limit || 10}`;
+      if (params.status) {
+        queryParams += `&status=${encodeURIComponent(params.status)}`;
+      }
+      if (params.category) {
+        queryParams += `&category=${encodeURIComponent(params.category)}`;
+      }
+      if (params.search) {
+        queryParams += `&search=${encodeURIComponent(params.search)}`;
+      }
+
+      const response = await this.apiManager.request(
+        {
+          url: `${apiEndpoints.GET_ALL_COMPLAINTS}${queryParams}`,
+          method: 'GET',
+        },
+        null,
+        this.headers
+      );
+      
+      return response.data || response;
+    } catch (error) {
+      console.error('API Error:', error);
+      swalHelper.showToast('Failed to fetch complaints', 'error');
+      throw error;
+    }
+  }
+
+  async getComplaintById(id: string): Promise<any> {
+    try {
+      this.getHeaders();
+      const response = await this.apiManager.request(
+        {
+          url: `${apiEndpoints.GET_COMPLAINT_BY_ID}/${id}`,
+          method: 'GET',
+        },
+        null,
+        this.headers
+      );
+      return response.data || response;
+    } catch (error) {
+      console.error('API Error:', error);
+      swalHelper.showToast('Failed to fetch complaint', 'error');
+      throw error;
+    }
+  }
+
+  async updateComplaintStatus(id: string, data: { status: string; adminResponse?: string }): Promise<any> {
+    try {
+      this.getHeaders();
+      const response = await this.apiManager.request(
+        {
+          url: `${apiEndpoints.UPDATE_COMPLAINT_STATUS}/${id}`,
+          method: 'PUT',
+        },
+        data,
+        this.headers
+      );
+      return response.data || response;
+    } catch (error) {
+      console.error('API Error:', error);
+      swalHelper.showToast('Failed to update complaint status', 'error');
+      throw error;
+    }
+  }
+
+  async deleteComplaint(id: string): Promise<any> {
+    try {
+      this.getHeaders();
+      const response = await this.apiManager.request(
+        {
+          url: `${apiEndpoints.DELETE_COMPLAINT}/${id}`,
+          method: 'DELETE',
+        },
+        null,
+        this.headers
+      );
+      return response.data || response;
+    } catch (error) {
+      console.error('API Error:', error);
+      swalHelper.showToast('Failed to delete complaint', 'error');
+      throw error;
+    }
+  }
+
+  // Suggestions methods
+  async getAllSuggestions(params: { page?: number; limit?: number; status?: string; category?: string; search?: string }): Promise<any> {
+    try {
+      this.getHeaders();
+      let queryParams = `?page=${params.page || 1}&limit=${params.limit || 10}`;
+      if (params.status) {
+        queryParams += `&status=${encodeURIComponent(params.status)}`;
+      }
+      if (params.category) {
+        queryParams += `&category=${encodeURIComponent(params.category)}`;
+      }
+      if (params.search) {
+        queryParams += `&search=${encodeURIComponent(params.search)}`;
+      }
+
+      const response = await this.apiManager.request(
+        {
+          url: `${apiEndpoints.GET_ALL_SUGGESTIONS}${queryParams}`,
+          method: 'GET',
+        },
+        null,
+        this.headers
+      );
+      
+      return response.data || response;
+    } catch (error) {
+      console.error('API Error:', error);
+      swalHelper.showToast('Failed to fetch suggestions', 'error');
+      throw error;
+    }
+  }
+
+  async getSuggestionById(id: string): Promise<any> {
+    try {
+      this.getHeaders();
+      const response = await this.apiManager.request(
+        {
+          url: `${apiEndpoints.GET_SUGGESTION_BY_ID}/${id}`,
+          method: 'GET',
+        },
+        null,
+        this.headers
+      );
+      return response.data || response;
+    } catch (error) {
+      console.error('API Error:', error);
+      swalHelper.showToast('Failed to fetch suggestion', 'error');
+      throw error;
+    }
+  }
+
+  async updateSuggestionStatus(id: string, data: { status: string; adminResponse?: string }): Promise<any> {
+    try {
+      this.getHeaders();
+      const response = await this.apiManager.request(
+        {
+          url: `${apiEndpoints.UPDATE_SUGGESTION_STATUS}/${id}`,
+          method: 'PUT',
+        },
+        data,
+        this.headers
+      );
+      return response.data || response;
+    } catch (error) {
+      console.error('API Error:', error);
+      swalHelper.showToast('Failed to update suggestion status', 'error');
+      throw error;
+    }
+  }
+
+  async deleteSuggestion(id: string): Promise<any> {
+    try {
+      this.getHeaders();
+      const response = await this.apiManager.request(
+        {
+          url: `${apiEndpoints.DELETE_SUGGESTION}/${id}`,
+          method: 'DELETE',
+        },
+        null,
+        this.headers
+      );
+      return response.data || response;
+    } catch (error) {
+      console.error('API Error:', error);
+      swalHelper.showToast('Failed to delete suggestion', 'error');
+      throw error;
+    }
+  }
 }
 
 @Injectable({

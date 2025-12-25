@@ -184,6 +184,18 @@ public BULK_DELETE_SLOTS=`${this.PATH}/bulkDeleteSlots`
 
     public GET_TYFCB_SUMMARY=`${this.PATH}/getUserTyfcbSummary`
 
+    // Complaints APIs
+    public GET_ALL_COMPLAINTS=`${this.PATH}/getAllComplaints`
+    public GET_COMPLAINT_BY_ID=`${this.PATH}/getComplaintById`
+    public UPDATE_COMPLAINT_STATUS=`${this.PATH}/updateComplaintStatus`
+    public DELETE_COMPLAINT=`${this.PATH}/deleteComplaint`
+
+    // Suggestions APIs
+    public GET_ALL_SUGGESTIONS=`${this.PATH}/getAllSuggestions`
+    public GET_SUGGESTION_BY_ID=`${this.PATH}/getSuggestionById`
+    public UPDATE_SUGGESTION_STATUS=`${this.PATH}/updateSuggestionStatus`
+    public DELETE_SUGGESTION=`${this.PATH}/deleteSuggestion`
+
   };
 
 

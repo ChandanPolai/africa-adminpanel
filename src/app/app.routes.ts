@@ -53,6 +53,8 @@ import { AnalyticsComponent } from './views/pages/analytics/analytics.component'
 
 import { LTPointsComponent } from './views/pages/LT Points/ltPoints.component';
 import { FinanceComponentOverall } from './views/pages/financeSummary/finance.component';
+import { ComplaintsComponent } from './views/pages/complaints/complaints.component';
+import { SuggestionsComponent } from './views/pages/suggestions/suggestions.component';
 
 
 export const routes: Routes = [
@@ -120,7 +122,9 @@ export const routes: Routes = [
 
 {path: 'podcastBooking', component: BookingsComponent, canActivate: [RoleGuard], data: { roles: ['admin', 'advisoryBoard', 'supportDirector', 'supportAmbassador'] } },
 {path: 'expense', component: ExpenseComponent, canActivate: [RoleGuard], data: { roles: ['admin', 'advisoryBoard', 'supportDirector', "accountant",'supportAmbassador'] } },
-{path:'tyfcbSummary', component: TyfcbSummaryComponent, canActivate:[RoleGuard], data: { roles: ['admin', 'advisoryBoard', 'supportDirector', 'supportAmbassador'] } }
+{path:'tyfcbSummary', component: TyfcbSummaryComponent, canActivate:[RoleGuard], data: { roles: ['admin', 'advisoryBoard', 'supportDirector', 'supportAmbassador'] } },
+{path: 'complaints', component: ComplaintsComponent, canActivate: [RoleGuard], data: { roles: ['admin', 'advisoryBoard', 'supportDirector', 'supportAmbassador'] } },
+{path: 'suggestions', component: SuggestionsComponent, canActivate: [RoleGuard], data: { roles: ['admin', 'advisoryBoard', 'supportDirector', 'supportAmbassador'] } }
 
     ],
   },

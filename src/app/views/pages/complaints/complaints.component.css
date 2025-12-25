@@ -1,0 +1,9 @@
+.empty-state {
+  padding: 2rem;
+}
+
+.empty-state i {
+  font-size: 4rem;
+  opacity: 0.5;
+}
+

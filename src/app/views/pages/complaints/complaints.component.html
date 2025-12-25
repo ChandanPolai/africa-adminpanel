@@ -1,0 +1,278 @@
+<div class="container-fluid">
+  <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+    <div class="card-header bg-primary d-flex justify-content-between align-items-center py-3">
+      <h4 class="mb-0 fw-bold text-white">
+        <i class="bi bi-exclamation-triangle me-2"></i>Complaints Management
+      </h4>
+    </div>
+    <div class="card-body p-0">
+      <div class="d-flex flex-wrap justify-content-between align-items-center p-3 border-bottom">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-2 mb-md-0">
+          <div class="me-2" style="min-width: 150px;">
+            <label for="statusSelect" class="form-label mb-1">Status</label>
+            <select 
+              id="statusSelect"
+              class="form-select"
+              [(ngModel)]="filters.status"
+              (change)="onStatusChange()">
+              <option value="">All Status</option>
+              <option *ngFor="let option of statusOptions" [value]="option.value">
+                {{option.label}}
+              </option>
+            </select>
+          </div>
+          <div class="me-2" style="min-width: 150px;">
+            <label for="categorySelect" class="form-label mb-1">Category</label>
+            <select 
+              id="categorySelect"
+              class="form-select"
+              [(ngModel)]="filters.category"
+              (change)="onCategoryChange()">
+              <option value="">All Categories</option>
+              <option *ngFor="let option of categoryOptions" [value]="option.value">
+                {{option.label}}
+              </option>
+            </select>
+          </div>
+          <div class="flex-grow-1 me-2">
+            <label for="searchInput" class="form-label mb-1">Search</label>
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by title or details..." 
+                   [(ngModel)]="filters.search" (input)="onSearch()">
+          </div>
+          <div class="mt-4">
+            <button class="btn btn-outline-secondary" (click)="resetFilters()">
+              <i class="bi bi-x-circle me-1"></i>Reset
+            </button>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <div class="ms-2">
+            <select 
+              id="limitSelect"
+              class="form-select"
+              [(ngModel)]="filters.limit" 
+              (change)="onLimitChange()">
+              <option [value]="10">10</option>
+              <option [value]="25">25</option>
+              <option [value]="50">50</option>
+              <option [value]="100">100</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="text-center my-5 py-5">
+      <div class="spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <div class="table-responsive" *ngIf="!loading && complaints?.docs && complaints.docs.length > 0">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light">
+          <tr>
+            <th class="ps-4 py-3">Sr No</th>
+            <th class="py-3">User</th>
+            <th class="py-3">Details</th>
+            <th class="py-3">Category</th>
+            <th class="py-3">Status</th>
+            <th class="py-3">Image</th>
+            <th class="py-3">Created At</th>
+            <th class="py-3 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let complaint of complaints.docs | paginate: { id: 'complaints-pagination', itemsPerPage: filters.limit, currentPage: filters.page, totalItems: complaints.totalDocs }; let i = index" 
+              class="border-bottom">
+            <td class="ps-4 py-3">{{ (filters.page - 1) * filters.limit + i + 1 }}</td>
+            <td class="py-3">
+              <div *ngIf="complaint.userId">
+                <div class="fw-bold">{{complaint.userId.name || 'N/A'}}</div>
+                <small class="text-muted">{{complaint.userId.chapter_name || ''}}</small>
+              </div>
+              <span *ngIf="!complaint.userId">N/A</span>
+            </td>
+            <td class="py-3">
+              <div class="text-truncate" style="max-width: 200px;" [title]="complaint.details">
+                {{complaint.details}}
+              </div>
+            </td>
+            <td class="py-3">
+              <span class="badge bg-secondary">{{complaint.category | titlecase}}</span>
+            </td>
+            <td class="py-3">
+              <span class="badge rounded-pill" [ngClass]="getStatusClass(complaint.status)">
+                {{complaint.status | titlecase}}
+              </span>
+            </td>
+            <td class="py-3">
+              <img *ngIf="complaint.image" [src]="imageurl + complaint.image" 
+                   class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover; cursor: pointer;"
+                   (click)="openImage(imageurl + complaint.image)">
+              <span *ngIf="!complaint.image" class="text-muted">No Image</span>
+            </td>
+            <td class="py-3">{{formatDate(complaint.createdAt)}}</td>
+            <td class="py-3 text-center">
+              <button class="btn btn-sm btn-info me-1" (click)="viewComplaint(complaint)" title="View Details">
+                <i class="bi bi-eye"></i>
+              </button>
+              <button class="btn btn-sm btn-primary me-1" (click)="updateStatus(complaint)" title="Update Status">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteComplaint(complaint)" title="Delete">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between align-items-center p-3 border-top">
+        <div *ngIf="complaints.docs && complaints.docs.length > 0" class="text-muted">
+          Showing {{ (filters.page - 1) * filters.limit + 1 }} to 
+          {{ Math.min(filters.page * filters.limit, complaints.totalDocs) }} 
+          of {{ complaints.totalDocs }} entries
+        </div>
+        <pagination-controls 
+          id="complaints-pagination"
+          [maxSize]="5"
+          [responsive]="true"
+          (pageChange)="onPageChange($event)"
+          previousLabel="Previous"
+          nextLabel="Next"
+          [directionLinks]="true">
+        </pagination-controls>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && (!complaints?.docs || complaints.docs.length === 0)" class="text-center my-5 py-4 px-4">
+      <div class="empty-state">
+        <i class="bi bi-exclamation-triangle fs-1 text-muted mb-3"></i>
+        <h5>No Complaints Found</h5>
+        <p class="text-muted">Try adjusting your search criteria or filters.</p>
+        <button class="btn btn-outline-primary rounded-pill mt-3" (click)="resetFilters()">
+          <i class="bi bi-arrow-repeat me-2"></i>Reset Filters
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Status Update Modal -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="statusModalLabel">Update Complaint Status</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="statusSelectModal" class="form-label">Status</label>
+          <select 
+            id="statusSelectModal"
+            class="form-select"
+            [(ngModel)]="statusForm.status"
+            name="status">
+            <option value="" disabled>Select status</option>
+            <option *ngFor="let option of statusOptionsForModal" [value]="option.value">
+              {{option.label}}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="adminResponse" class="form-label">Admin Response</label>
+          <textarea 
+            id="adminResponse" 
+            class="form-control" 
+            rows="4" 
+            placeholder="Enter admin response..."
+            [(ngModel)]="statusForm.adminResponse"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeStatusModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveStatus()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Details Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModalLabel">Complaint Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedComplaint">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>User Name:</strong>
+            <p>{{selectedComplaint.userId?.name || 'N/A'}}</p>
+          </div>
+          <div class="col-md-6">
+            <strong>Chapter:</strong>
+            <p>{{selectedComplaint.userId?.chapter_name || 'N/A'}}</p>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>Email:</strong>
+            <p>{{selectedComplaint.userId?.email || 'N/A'}}</p>
+          </div>
+          <div class="col-md-6">
+            <strong>Phone:</strong>
+            <p>{{selectedComplaint.userId?.mobile_number || 'N/A'}}</p>
+          </div>
+        </div>
+        <div class="mb-3">
+          <strong>Title:</strong>
+          <p>{{selectedComplaint.title || 'N/A'}}</p>
+        </div>
+        <div class="mb-3">
+          <strong>Details:</strong>
+          <p class="border p-3 rounded bg-light">{{selectedComplaint.details}}</p>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>Category:</strong>
+            <p><span class="badge bg-secondary">{{selectedComplaint.category | titlecase}}</span></p>
+          </div>
+          <div class="col-md-6">
+            <strong>Status:</strong>
+            <p><span class="badge rounded-pill" [ngClass]="getStatusClass(selectedComplaint.status)">{{selectedComplaint.status | titlecase}}</span></p>
+          </div>
+        </div>
+        <div class="mb-3" *ngIf="selectedComplaint.adminResponse">
+          <strong>Admin Response:</strong>
+          <p class="border p-3 rounded bg-light">{{selectedComplaint.adminResponse}}</p>
+        </div>
+        <div class="mb-3" *ngIf="selectedComplaint.image">
+          <strong>Image:</strong>
+          <div class="mt-2">
+            <img [src]="imageurl + selectedComplaint.image" 
+                 class="img-fluid rounded" 
+                 style="max-height: 300px; cursor: pointer;"
+                 (click)="openImage(imageurl + selectedComplaint.image)">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>Created At:</strong>
+            <p>{{formatDate(selectedComplaint.createdAt)}}</p>
+          </div>
+          <div class="col-md-6" *ngIf="selectedComplaint.resolvedAt">
+            <strong>Resolved At:</strong>
+            <p>{{formatDate(selectedComplaint.resolvedAt)}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
